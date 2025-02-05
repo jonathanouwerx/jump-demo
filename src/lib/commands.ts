@@ -17,28 +17,28 @@ export interface CustomFileSystem {
 const commands: Record<string, Command> = {
   help: {
     description: "Show this help message",
-    handler: async (_, fileSystem) => handleHelpCommand(),
+    handler: async (_, __) => handleHelpCommand(),
   },
   clear: {
     description: "Clear the terminal",
-    handler: async (_, fileSystem) => "__CLEAR__", // Special token for clearing terminal
+    handler: async (_, __) => "__CLEAR__", // Special token for clearing terminal
   },
   echo: {
     description: "Echo back the arguments",
-    handler: async (args, fileSystem) => args.join(" ") || "No input provided.",
+    handler: async (args, __) => args.join(" ") || "No input provided.",
   },
   version: {
     description: "Show CLI tool version",
     aliases: ["v"],
-    handler: async (_, fileSystem) => "CLI Tool Demo v1.0.0",
+    handler: async (_, __) => "CLI Tool Demo v1.0.0",
   },
   ls: {
     description: "List files in the current directory",
-    handler: async (args, fileSystem) => handleLsCommand(args, fileSystem),
+    handler: async (_, fileSystem) => handleLsCommand(fileSystem),
   },
   pwd: {
     description: "Show the current working directory",
-    handler: async (args, fileSystem) => fileSystem.currentPath,
+    handler: async (_, fileSystem) => fileSystem.currentPath,
   },
   mkdir: {
     description: "Create a new directory",
@@ -203,7 +203,7 @@ function handleTouchCommand(args: string[], fileSystem: CustomFileSystem) {
   return `File '${newFileName}' created successfully.`;
 }
 
-function handleLsCommand(args: string[], fileSystem: CustomFileSystem): string {
+function handleLsCommand(fileSystem: CustomFileSystem): string {
   console.log("Current Path:", fileSystem.currentPath);
   console.log(
     "Directory Contents:",
