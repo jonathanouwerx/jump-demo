@@ -6,7 +6,7 @@ import "./App.css";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path={import.meta.env.BASE_URL} component={Home} />
       <Route component={NotFound} />
     </Switch>
   );
